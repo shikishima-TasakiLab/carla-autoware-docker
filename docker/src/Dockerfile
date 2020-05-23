@@ -29,6 +29,7 @@ RUN git clone https://bitbucket.org/carla-simulator/autoware-contents.git carla-
     echo "source /opt/carla-ros-bridge/melodic/setup.bash" >> /home/autoware/.bashrc && \
     echo "source /home/autoware/Autoware/install/setup.bash" >> /home/autoware/.bashrc
 ENV CARLA_MAPS_PATH /home/autoware/carla-map/maps/
+ENV PYTHONPATH ${PYTHONPATH}:/opt/carla-simulator/PythonAPI/carla/dist/carla-0.9.8-py2.7-linux-x86_64.egg
 
 COPY ./entrypoint.sh /tmp
 ENTRYPOINT ["/tmp/entrypoint.sh"]
