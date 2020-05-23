@@ -10,7 +10,7 @@ function usage_exit {
   Usage: $PROG_NAME [OPTIONS...]
   OPTIONS:
     -h, --help                      このヘルプを表示
-    -i, --id                        コンテナのIDを指定
+    -i, --id ID                     コンテナのIDを指定
     -n, --name NAME                 コンテナの名前を指定
 _EOS_
     cd ${CURRENT_DIR}
