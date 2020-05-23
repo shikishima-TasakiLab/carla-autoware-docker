@@ -21,6 +21,9 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 304F9BC29914A77D &&
 
 USER autoware
 WORKDIR /home/autoware
+
+RUN pip install pygame numpy
+
 RUN git clone https://bitbucket.org/carla-simulator/autoware-contents.git carla-map && \
     cd carla-map && \
     git lfs pull && \
@@ -28,6 +31,7 @@ RUN git clone https://bitbucket.org/carla-simulator/autoware-contents.git carla-
     echo "alias carla='bash /opt/carla-simulator/bin/CarlaUE4.sh'" >> /home/autoware/.bashrc && \
     echo "source /opt/carla-ros-bridge/melodic/setup.bash" >> /home/autoware/.bashrc && \
     echo "source /home/autoware/Autoware/install/setup.bash" >> /home/autoware/.bashrc
+
 ENV CARLA_MAPS_PATH /home/autoware/carla-map/maps/
 ENV PYTHONPATH ${PYTHONPATH}:/opt/carla-simulator/PythonAPI/carla/dist/carla-0.9.8-py2.7-linux-x86_64.egg
 
