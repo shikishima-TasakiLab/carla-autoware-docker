@@ -24,6 +24,7 @@ WORKDIR /home/autoware
 RUN git clone https://bitbucket.org/carla-simulator/autoware-contents.git carla-map && \
     cd carla-map && \
     git lfs pull && \
+    echo "alias autoware='roslaunch runtime_manager runtime_manager.launch'" >> /home/autoware/.bashrc && \
     echo "alias carla='bash /opt/carla-simulator/bin/CarlaUE4.sh'" >> /home/autoware/.bashrc && \
     echo "source /opt/carla-ros-bridge/melodic/setup.bash" >> /home/autoware/.bashrc && \
     echo "source /home/autoware/Autoware/install/setup.bash" >> /home/autoware/.bashrc

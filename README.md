@@ -64,7 +64,7 @@ git clone https://github.com/shikishima-TasakiLab/carla-autoware-docker.git
 
 Dockerコンテナを起動した後，次のコマンドで Autoware を起動する．
 ```bash
-roslaunch runtime_manager runtime_manager.launch
+autoware
 ```
 
 ### CARLA の起動
