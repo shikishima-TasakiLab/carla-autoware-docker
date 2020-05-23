@@ -1,5 +1,8 @@
 booted_cmds:
-  names: []
+  names:
+  - voxel_grid_filter
+  - ndt_matching
+  - vehicle_model
 calibration_publisher:
   camera_frame: camera
   camera_id: ''
@@ -51,6 +54,28 @@ mission_planning_qs:
   file: ''
 motion_planning_qs:
   file: ''
+ndt_matching:
+  error_threshold: 1.0
+  get_height: false
+  imu_topic: !!python/unicode '/imu_raw'
+  imu_upside_down: false
+  init_pos_gnss: 1
+  max_iterations: 30
+  method_type: 0
+  output_log_data: false
+  pitch: 0.0
+  resolution: 1.0
+  roll: 0.0
+  step_size: 0.1
+  sync: false
+  trans_epsilon: 0.01
+  use_imu: false
+  use_odom: false
+  use_predict_pose: 1
+  x: 0.0
+  y: 0.0
+  yaw: 0.0
+  z: 0.0
 pcd_binarizer:
   path_pcd_binarizer: ''
   point_type: !!python/unicode 'PointXYZ'
@@ -88,9 +113,24 @@ point_cloud:
   path_area_list: None
   path_pcd: ''
   scene_num: noupdate
+points_concat_filter:
+  input_topics: '[/points_alpha,/points_beta]'
+  output_frame_id: velodyne
+  output_topic: /points_concat
 points_image:
   camera_id: ''
   sync: false
+ray_ground_filter:
+  base_frame: base_link
+  clipping_height: 2.0
+  concentric_divider_distance: 0.0
+  general_max_slope: 5
+  input_point_topic: !!python/unicode '/points_raw'
+  local_max_slope: 8
+  min_height_threshold: 0.05
+  min_point_distance: 1.85
+  radial_divider_angle: 0.08
+  reclass_distance_threshold: 0.2
 sensing_qs:
   file: ''
 setup_tf:
@@ -100,10 +140,10 @@ setup_tf:
   period_in_ms: 10
   pitch: 0.0
   roll: 0.0
-  x: 1.2
+  x: 0.0
   y: 0.0
   yaw: 0.0
-  z: 2.0
+  z: 2.4
 tf:
   file: ''
 vector_map:
@@ -112,6 +152,24 @@ vehicle_info:
   info_path: ''
 vehicle_model:
   model_path: ''
+vel_pose_connect:
+  sim_mode: false
+  topic_pose_stamped: /ndt_pose
+  topic_twist_stamped: /estimate_twist
 virtual_scan_image:
   camera_id: ''
   sync: false
+voxel_grid_filter:
+  measurement_range: 200
+  points_topic: /points_raw
+  sync: false
+  voxel_leaf_size: 2.0
+waypoint_clicker:
+  output_file: /tmp/lane_waypoint.csv
+  velocity: 40.0
+waypoint_saver:
+  input_type: 0
+  interval: 1.0
+  lane_topic: !!python/unicode '/lane_waypoints_array'
+  save_filename: /home/autoware/shared_dir/Town03.csv
+  save_velocity: true

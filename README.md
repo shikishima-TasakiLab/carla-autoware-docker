@@ -73,3 +73,46 @@ Dockerコンテナを起動した後，次のコマンドで CARLA を起動す�
 ```bash
 carla
 ```
+
+### Autoware・CARLA の連携
+
+1. 次のコマンドでDockerコンテナを起動する．
+
+    ```bash
+    ./docker/run-docker.sh
+    ```
+    
+1. 次のコマンドでAutowareを起動する．
+
+    ```bash
+    autoware
+    ```
+
+1. 別のターミナルで次のコマンドを実行し，起動中のDockerコンテナに入る．
+
+    ```bash
+    ./docker/exec-docker.sh
+    ```
+
+1. 次のコマンドでCARLAを起動する．
+
+    ```bash
+    carla
+    ```
+
+1. さらに別のターミナルで次のコマンドを実行し，起動中のDockerコンテナに入る．
+
+    ```bash
+    ./docker/exec-docker.sh
+    ```
+
+1. 次のコマンドを実行して，CARLAとAutowareを接続する．
+
+    ```bash
+    roslaunch carla_autoware_bridge carla_autoware_bridge_with_manual_control.launch use_sim_time:=False
+    ```
+
+    |オプション  |パラメータ   |説明                |既定値  |例                   |
+    |------------|-------------|--------------------|--------|---------------------|
+    |use_sim_time|{True\|False}|ROSTimeを使用する   |True    |`use_sim_time:=False`|
+    |town        |TOWN         |使用する町を選択する|"Town01"|`town:="Town03"`     |
