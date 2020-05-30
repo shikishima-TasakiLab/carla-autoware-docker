@@ -60,6 +60,19 @@ git clone --recurse-submodules https://github.com/shikishima-TasakiLab/carla-aut
 
     終了時は，`exit`コマンドか [Ctrl]+[D] を入力する．
 
+### CARLA-ROS-Bridge のビルド
+
+Dockerコンテナを起動したあと，次のコマンドで CARLA-ROS-Bridge を起動する．
+```bash
+cd catkin_ws/
+catkin_make
+```
+その後，
+```bash
+source ~/.bashrc
+```
+を実行するか，コンテナを起動し直すことで CARLA-ROS-Bridge の使用が可能となる．
+
 ### Autoware の起動
 
 Dockerコンテナを起動した後，次のコマンドで Autoware を起動する．
