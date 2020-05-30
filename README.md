@@ -31,7 +31,7 @@ git clone https://github.com/shikishima-TasakiLab/carla-autoware-docker.git
     ./docker/build-docker.sh
     ```
 
-1. ビルドに成功すると，Dockerイメージの一覧に "carla/autoware:1.14.0-alpha.1-melodic-cuda" が追加される．
+1. ビルドに成功すると，Dockerイメージの一覧に "carla/autoware:1.14.0-melodic-cuda" が追加される．
 
     ```bash
     docker images
@@ -39,7 +39,7 @@ git clone https://github.com/shikishima-TasakiLab/carla-autoware-docker.git
     >>>
 
     REPOSITORY          TAG                             IMAGE ID            CREATED             SIZE
-    carla/autoware      1.14.0-alpha.1-melodic-cuda     d0b033d2befc        12 hours ago        20.9GB
+    carla/autoware      1.14.0-melodic-cuda             b2c65c0f2add        9 minutes ago       23.8GB
     ```
 
 ### Docker コンテナの起動

@@ -67,4 +67,4 @@ fi
 
 CONTAINER_ID=${CONTAINER_ID:0:12}
 
-docker exec -it ${CONTAINER_ID} /bin/bash
+docker exec -it -u autoware ${CONTAINER_ID} /bin/bash -c "cd ~ && clear && /bin/bash"
