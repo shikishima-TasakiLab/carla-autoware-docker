@@ -18,7 +18,7 @@ CARLA と Autoware を含むDockerイメージの作成，コンテナの起動�
 ## インストール
 
 ```bash
-git clone https://github.com/shikishima-TasakiLab/carla-autoware-docker.git
+git clone --recurse-submodules https://github.com/shikishima-TasakiLab/carla-autoware-docker.git
 ```
 
 ## 使い方
