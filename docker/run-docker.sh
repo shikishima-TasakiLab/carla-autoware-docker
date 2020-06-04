@@ -58,10 +58,12 @@ DOCKER_IMAGE="carla/autoware:1.14.0-melodic-cuda"
 
 XSOCK="/tmp/.X11-unix"
 XAUTH="/tmp/.docker.xauth"
+ASOCK="/tmp/pulseaudio.socket"
+ACKIE="/tmp/pulseaudio.cookie"
+ACONF="/tmp/pulseaudio.client.conf"
 
 HOST_WS=$(dirname $(dirname $(readlink -f $0)))/catkin_ws
 HOST_SD=$(dirname $(dirname $(readlink -f $0)))/shared_dir
-PARAM_YML=${RUN_DIR}/param/param_init.yaml
 cp ${PARAM_YML} ${RUN_DIR}/src/param.yaml
 
 DOCKER_VOLUME="-v ${XSOCK}:${XSOCK}:rw"
@@ -69,13 +71,29 @@ DOCKER_VOLUME="${DOCKER_VOLUME} -v ${XAUTH}:${XAUTH}:rw"
 DOCKER_VOLUME="${DOCKER_VOLUME} -v ${RUN_DIR}/src/param.yaml:/home/autoware/Autoware/install/runtime_manager/lib/runtime_manager/param.yaml:rw"
 DOCKER_VOLUME="${DOCKER_VOLUME} -v ${HOST_SD}:/home/autoware/shared_dir:rw"
 DOCKER_VOLUME="${DOCKER_VOLUME} -v ${HOST_WS}:/home/autoware/catkin_ws:rw"
+DOCKER_VOLUME="${DOCKER_VOLUME} -v ${ASOCK}:${ASOCK}"
+DOCKER_VOLUME="${DOCKER_VOLUME} -v ${ACONF}:/etc/pulse/client.conf"
 
 DOCKER_ENV="-e XAUTHORITY=${XAUTH}"
 DOCKER_ENV="${DOCKER_ENV} -e DISPLAY=$DISPLAY"
 DOCKER_ENV="${DOCKER_ENV} -e USER_ID=$(id -u)"
 DOCKER_ENV="${DOCKER_ENV} -e TERM=xterm-256color"
+DOCKER_ENV="${DOCKER_ENV} -e PULSE_SERVER=unix:/tmp/pulseaudio.socket"
+DOCKER_ENV="${DOCKER_ENV} -e PULSE_COOKIE=${ACKIE}"
 
 DOCKER_NET="host"
+
+if [[ ! -S /tmp/pulseaudio.socket ]]; then
+    pacmd load-module module-native-protocol-unix socket=${ASOCK}
+fi
+
+if [[ ! -f ${ACONF} ]]; then
+    touch ${ACONF}
+    echo "default-server = unix:/tmp/pulseaudio.socket" > ${ACONF}
+    echo "autospawn = no" > ${ACONF}
+    echo "daemon-binary = /bin/true" > ${ACONF}
+    echo "enable-shm = false" > ${ACONF}
+fi
 
 touch ${XAUTH}
 xauth nlist $DISPLAY | sed -e 's/^..../ffff/' | xauth -f ${XAUTH} nmerge -
