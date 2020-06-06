@@ -64,11 +64,17 @@ ACONF="/tmp/pulseaudio.client.conf"
 
 HOST_WS=$(dirname $(dirname $(readlink -f $0)))/catkin_ws
 HOST_SD=$(dirname $(dirname $(readlink -f $0)))/shared_dir
-cp ${PARAM_YML} ${RUN_DIR}/src/param.yaml
+cp ${PARAM_YML} ${RUN_DIR}/src/runtime_manager/param.yaml
 
 DOCKER_VOLUME="-v ${XSOCK}:${XSOCK}:rw"
 DOCKER_VOLUME="${DOCKER_VOLUME} -v ${XAUTH}:${XAUTH}:rw"
-DOCKER_VOLUME="${DOCKER_VOLUME} -v ${RUN_DIR}/src/param.yaml:/home/autoware/Autoware/install/runtime_manager/lib/runtime_manager/param.yaml:rw"
+DOCKER_VOLUME="${DOCKER_VOLUME} -v ${RUN_DIR}/src/runtime_manager/param.yaml:/home/autoware/Autoware/install/runtime_manager/lib/runtime_manager/param.yaml:rw"
+DOCKER_VOLUME="${DOCKER_VOLUME} -v ${RUN_DIR}/src/runtime_manager/computing.yaml:/home/autoware/Autoware/install/runtime_manager/lib/runtime_manager/computing.yaml:rw"
+DOCKER_VOLUME="${DOCKER_VOLUME} -v ${RUN_DIR}/src/runtime_manager/data.yaml:/home/autoware/Autoware/install/runtime_manager/lib/runtime_manager/data.yaml:rw"
+DOCKER_VOLUME="${DOCKER_VOLUME} -v ${RUN_DIR}/src/runtime_manager/interface.yaml:/home/autoware/Autoware/install/runtime_manager/lib/runtime_manager/interface.yaml:rw"
+DOCKER_VOLUME="${DOCKER_VOLUME} -v ${RUN_DIR}/src/runtime_manager/map.yaml:/home/autoware/Autoware/install/runtime_manager/lib/runtime_manager/map.yaml:rw"
+DOCKER_VOLUME="${DOCKER_VOLUME} -v ${RUN_DIR}/src/runtime_manager/sensing.yaml:/home/autoware/Autoware/install/runtime_manager/lib/runtime_manager/sensing.yaml:rw"
+DOCKER_VOLUME="${DOCKER_VOLUME} -v ${RUN_DIR}/src/runtime_manager/setup.yaml:/home/autoware/Autoware/install/runtime_manager/lib/runtime_manager/setup.yaml:rw"
 DOCKER_VOLUME="${DOCKER_VOLUME} -v ${HOST_SD}:/home/autoware/shared_dir:rw"
 DOCKER_VOLUME="${DOCKER_VOLUME} -v ${HOST_WS}:/home/autoware/catkin_ws:rw"
 DOCKER_VOLUME="${DOCKER_VOLUME} -v ${ASOCK}:${ASOCK}"
@@ -109,9 +115,9 @@ docker run \
     ${DOCKER_VOLUME} \
     ${DOCKER_IMAGE}
 
-if [[ -f ${RUN_DIR}/src/param.yaml ]]; then
+if [[ -f ${RUN_DIR}/src/runtime_manager/param.yaml ]]; then
     if [[ ${SAVE_PATH} != "" ]]; then
-        cp ${RUN_DIR}/src/param.yaml ${SAVE_PATH}
+        cp ${RUN_DIR}/src/runtime_manager/param.yaml ${SAVE_PATH}
     fi
-    rm ${RUN_DIR}/src/param.yaml
+    rm ${RUN_DIR}/src/runtime_manager/param.yaml
 fi
