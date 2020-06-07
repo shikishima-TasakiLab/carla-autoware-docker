@@ -84,21 +84,21 @@ DOCKER_ENV="-e XAUTHORITY=${XAUTH}"
 DOCKER_ENV="${DOCKER_ENV} -e DISPLAY=$DISPLAY"
 DOCKER_ENV="${DOCKER_ENV} -e USER_ID=$(id -u)"
 DOCKER_ENV="${DOCKER_ENV} -e TERM=xterm-256color"
-DOCKER_ENV="${DOCKER_ENV} -e PULSE_SERVER=unix:/tmp/pulseaudio.socket"
+DOCKER_ENV="${DOCKER_ENV} -e PULSE_SERVER=unix:${ASOCK}"
 DOCKER_ENV="${DOCKER_ENV} -e PULSE_COOKIE=${ACKIE}"
 
 DOCKER_NET="host"
 
-if [[ ! -S /tmp/pulseaudio.socket ]]; then
+if [[ ! -S ${ASOCK} ]]; then
     pacmd load-module module-native-protocol-unix socket=${ASOCK}
 fi
 
 if [[ ! -f ${ACONF} ]]; then
     touch ${ACONF}
-    echo "default-server = unix:/tmp/pulseaudio.socket" > ${ACONF}
-    echo "autospawn = no" > ${ACONF}
-    echo "daemon-binary = /bin/true" > ${ACONF}
-    echo "enable-shm = false" > ${ACONF}
+    echo "default-server = unix:${ASOCK}" > ${ACONF}
+    echo "autospawn = no" >> ${ACONF}
+    echo "daemon-binary = /bin/true" >> ${ACONF}
+    echo "enable-shm = false" >> ${ACONF}
 fi
 
 touch ${XAUTH}
